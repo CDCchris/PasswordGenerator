@@ -88,19 +88,44 @@ var upperCasedCharacters = [
   'Z'
 ];
 
+var passwordChoice = []
+
+
 // Function to prompt user for password options
+//prompt each and validate, store data
+
 function getPasswordOptions() {
+  var passwordLength = prompt('How many characters would you like? (Between 10-64)')
+   if (passwordLength  < 10 || passwordLength  > 64) {
+    alert('Please pick a number between 10-64.')
+    getPasswordOptions()
+} else {
+  var lower = confirm('Would you like to use lower case characters?')
+  var upper = confirm('Would you like to use upper case characters?')
+  var special = confirm('Would you like to use special characters?')
+  var numbers = confirm('Would you like to use numbers?')
+  if (lower === true) {
+    passwordChoice.push(...lowerCasedCharacters)
+  }
+  if (upper === true) {
+    passwordChoice.push(...upperCasedCharacters)
+  }
+  if (special === true) {
+    passwordChoice.push(...specialCharacters)
+  }
+  if (numbers === true) {
+    passwordChoice.push(...numericCharacters)
+  }
+  console.log(passwordChoice)
 
+  var collectedPasswordChoice = []
+
+  for ( var i = 0; i < passwordLength; i++) {
+    collectedPasswordChoice.push(passwordChoice[(Math.floor(Math.random() * passwordChoice.length))])
+  }
+  console.log(collectedPasswordChoice)
+  return collectedPasswordChoice.join('')
 }
-
-// Function for getting a random element from an array
-function getRandom(arr) {
-
-}
-
-// Function to generate password with user input
-function generatePassword() {
-
 }
 
 // Get references to the #generate element
@@ -108,7 +133,7 @@ var generateBtn = document.querySelector('#generate');
 
 // Write password to the #password input
 function writePassword() {
-  var password = generatePassword();
+  var password = getPasswordOptions();
   var passwordText = document.querySelector('#password');
 
   passwordText.value = password;
